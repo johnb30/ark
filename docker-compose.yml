@@ -1,0 +1,19 @@
+version: '2'
+networks:
+  ark:
+    driver: bridge
+services:
+  ark:
+    image: ark
+    build: .
+    depends_on:
+      - redis
+    networks:
+      - ark
+    command: python /src/app.py -mc=localhost -rc=redis
+  redis:
+    image: redis
+    expose:
+      - "6379"
+    networks:
+      - ark
